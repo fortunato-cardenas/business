@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotSite Studio - AI Chatbot + Website for Small Businesses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+        }
+        
+        input, button, textarea, select {
+            font: inherit;
+        }
+        
+        p, h1, h2, h3, h4, h5, h6 {
+            overflow-wrap: break-word;
+        }
+        
+        /* Custom Styles */
+        :root {
+            --primary-color: #000;
+            --secondary-color: #4b5563;
+            --accent-color: #f3f4f6;
+            --border-color: #e5e7eb;
+            --card-bg: rgba(255, 255, 255, 0.7);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: var(--primary-color);
+            background: linear-gradient(to bottom, #f9fafb, #ffffff);
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+        
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        
+        .desktop-nav {
+            display: none;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+            }
+        }
+        
+        .desktop-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+        
+        .desktop-nav button:hover {
+            color: var(--primary-color);
+        }
+        
+        .header-actions {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        @media (min-width: 768px) {
+            .header-actions {
+                display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        
+        .mobile-menu {
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .mobile-menu.hidden {
+            display: none;
+        }
+        
+        .mobile-menu-content {
+            padding: 0.75rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .mobile-menu-content button {
+            text-align: left;
+            padding: 0.5rem 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-menu-content button:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .language-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-width: 120px;
+            z-index: 1000;
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .language-option:hover {
+            background: #f9fafb;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 1rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: #111;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #d1d5db;
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: #f9fafb;
+        }
+        
+        /* Card Styles */
+        .card {
+            border-radius: 1.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Tag Styles */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            background: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin: 0.75rem 0;
+        }
+        
+        @media (min-width: 1024px) {
+            .section-title h2 {
+                font-size: 2.25rem;
+            }
+        }
+        
+        .section-title p {
+            color: var(--secondary-color);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            position: relative;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        @media (min-width: 640px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        .hero-content p {
+            font-size: 1.125rem;
+            color: var(--secondary-color);
+        }
+        
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        @media (min-width: 640px) {
+            .hero-actions {
+                flex-direction: row;
+            }
+        }
+        
+        .hero-features {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            padding-top: 0.5rem;
+        }
+        
+        .hero-features div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Demo Card */
+        .demo-card {
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(to bottom right, #fff, #f9fafb);
+        }
+        
+        .demo-chat {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: 16rem;
+            overflow-y: auto;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .message-bot {
+            background: white;
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+        }
+        
+        .message-user {
+            background: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+        }
+        
+        .demo-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        .demo-input input {
+            flex: 1;
+            border-radius: 0.75rem;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        
+        .demo-input input:focus {
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2);
+        }
+        
+        /* Industries Section */
+        .industries {
+            background: rgba(249, 250, 251, 0.8);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .industries-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .industries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .industries-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .industry-card {
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .industry-card img {
+            width: 100%;
+            height: 10rem;
+            object-fit: cover;
+        }
+        
+        .industry-card div {
+            padding: 1rem;
+        }
+        
+        .industry-card h3 {
+            font-weight: 600;
+        }
+        
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .feature-card h3 {
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+        
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            background: rgba(249, 250, 251, 0.8);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .steps-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .step-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .step-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .step-card h3 {
+            font-weight: 600;
+        }
+        
+        .step-card p {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .pricing-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .price {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        
+        .price-interval {
+            color: var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .pricing-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .pricing-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        @media (min-width: 640px) {
+            .pricing-actions {
+                flex-direction: row;
+            }
+        }
+        
+        .pricing-note {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        .info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .info-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .info-card h3 {
+            font-weight: 600;
+        }
+        
+        .info-card p {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            background: rgba(249, 250, 251, 0.8);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .faq-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .faq-answer {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            max-height: 0;
+        }
+        
+        .faq-answer.open {
+            max-height: 500px;
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            border-radius: 0.75rem;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2);
+        }
+        
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .form-note {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .contact-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .contact-card h3 {
+            font-weight: 600;
+        }
+        
+        .contact-card p {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-details a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 0;
+        }
+        
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+        
+        @media (min-width: 768px) {
+            .footer-container {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-robot"></i>
+                <span data-translate="site.name">BotSite Studio</span>
+            </a>
+            
+            <nav class="desktop-nav">
+                <button data-scroll="features" data-translate="nav.features">Features</button>
+                <button data-scroll="industries" data-translate="nav.industries">Industries</button>
+                <button data-scroll="howitworks" data-translate="nav.howitworks">How it works</button>
+                <button data-scroll="pricing" data-translate="nav.pricing">Pricing</button>
+                <button data-scroll="faq" data-translate="nav.faq">FAQ</button>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="language-button" id="languageButton">
+                        <span id="currentLanguageFlag">🇺🇸</span>
+                        <span id="currentLanguage">EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown hidden" id="languageDropdown">
+                        <button class="language-option" data-lang="en">
+                            <span>🇺🇸</span>
+                            <span>English</span>
+                        </button>
+                        <button class="language-option" data-lang="es">
+                            <span>🇪🇸</span>
+                            <span>Español</span>
+                        </button>
+                        <button class="language-option" data-lang="fr">
+                            <span>🇫🇷</span>
+                            <span>Français</span>
+                        </button>
+                        <button class="language-option" data-lang="pt">
+                            <span>🇵🇹</span>
+                            <span>Português</span>
+                        </button>
+                        <button class="language-option" data-lang="ru">
+                            <span>🇷🇺</span>
+                            <span>Русский</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <a href="mailto:hello@botsite.studio" class="text-sm text-gray-700 hover:text-black">hello@botsite.studio</a>
+                <button class="btn btn-primary" data-scroll="contact">
+                    <span data-translate="nav.get_started">Get Started</span> <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu hidden" id="mobileMenu">
+            <div class="container">
+                <div class="mobile-menu-content">
+                    <button data-scroll="features" data-translate="nav.features">Features</button>
+                    <button data-scroll="industries" data-translate="nav.industries">Industries</button>
+                    <button data-scroll="howitworks" data-translate="nav.howitworks">How it works</button>
+                    <button data-scroll="pricing" data-translate="nav.pricing">Pricing</button>
+                    <button data-scroll="faq" data-translate="nav.faq">FAQ</button>
+                    <button data-scroll="contact" data-translate="nav.contact">Contact</button>
+                    <button class="btn btn-primary mt-2" data-scroll="contact" data-translate="nav.get_started">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="tag">
+                        <i class="fas fa-magic"></i> <span data-translate="hero.trial">First month free</span>
+                    </span>
+                    
+                    <h1 data-translate="hero.title">Launch your business online with an AI chatbot <span class="whitespace-nowrap">— website included</span></h1>
+                    
+                    <p data-translate="hero.description">We build a beautiful website for your small business and add a smart chatbot that answers questions, books tables, and organizes orders. You focus on customers, we handle the tech.</p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" data-scroll="contact" data-translate="hero.start">Start free month</button>
+                        <button class="btn btn-outline" data-scroll="pricing" data-translate="hero.view_pricing">View pricing</button>
+                    </div>
+                    
+                    <div class="hero-features">
+                        <div>
+                            <i class="fas fa-shield-alt"></i> <span data-translate="hero.no_contract">No contract</span>
+                        </div>
+                        <div>
+                            <i class="far fa-credit-card"></i> <span data-translate="hero.cancel_anytime">Cancel anytime</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-rocket"></i> <span data-translate="hero.go_live">Go live in days</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="card demo-card">
+                        <div class="demo-header">
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="tag">
+                                    <i class="fas fa-robot"></i> <span data-translate="demo.tag">Demo</span>
+                                </span>
+                                <span class="text-gray-600" data-translate="demo.preview">Chatbot preview</span>
+                            </div>
+                            <h3 class="mt-2 text-xl font-bold" data-translate="demo.title">Order & Booking Assistant</h3>
+                            <p class="text-gray-600" data-translate="demo.description">Try a sample conversation below.</p>
+                        </div>
+                        
+                        <div class="demo-chat">
+                            <div class="message message-bot">
+                                <span data-translate="demo.message1">👋 Hi! I can help with bookings, menu, and orders. What do you need?</span>
+                            </div>
+                            <div class="message message-user">
+                                <span data-translate="demo.message2">Book a table for 4 tomorrow at 7pm.</span>
+                            </div>
+                            <div class="message message-bot">
+                                <span data-translate="demo.message3">Great! Table for 4 reserved for tomorrow 19:00. Shall I send a confirmation by SMS or email?</span>
+                            </div>
+                            <div class="message message-user">
+                                <span data-translate="demo.message4">SMS please.</span>
+                            </div>
+                            <div class="message message-bot">
+                                <span data-translate="demo.message5">Done ✅ Anything else? Today's special is Margherita Pizza.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="demo-input">
+                            <input type="text" data-translate="demo.placeholder" placeholder="Type a message (mock input)">
+                            <button class="btn btn-primary" data-translate="demo.send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Industries Section -->
+    <section id="industries" class="industries">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="industries.eyebrow">Industries</span>
+                </span>
+                <h2 data-translate="industries.title">Businesses we serve</h2>
+                <p data-translate="industries.subtitle">Our chatbot and website solutions are designed for a variety of small businesses.</p>
+            </div>
+            
+            <div class="industries-grid">
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg" alt="Restaurant">
+                    <div>
+                        <h3 data-translate="industries.1">Restaurants & Cafés</h3>
+                    </div>
+                </div>
+                
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg" alt="Salon">
+                    <div>
+                        <h3 data-translate="industries.2">Salons & Spas</h3>
+                    </div>
+                </div>
+                
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg" alt="Gym">
+                    <div>
+                        <h3 data-translate="industries.3">Gyms & Fitness</h3>
+                    </div>
+                </div>
+                
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg" alt="Real Estate">
+                    <div>
+                        <h3 data-translate="industries.4">Real Estate</h3>
+                    </div>
+                </div>
+                
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg" alt="Retail">
+                    <div>
+                        <h3 data-translate="industries.5">Retail Shops</h3>
+                    </div>
+                </div>
+                
+                <div class="card industry-card">
+                    <img src="https://images.pexels.com/photos/3845761/pexels-photo-3845761.jpeg" alt="Clinic">
+                    <div>
+                        <h3 data-translate="industries.6">Dentists & Clinics</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="features.eyebrow">What you get</span>
+                </span>
+                <h2 data-translate="features.title">Chatbot + Website. One subscription.</h2>
+                <p data-translate="features.subtitle">We collect your photos and info, create a modern website, and connect an AI chatbot that answers questions and organizes orders.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="card feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-robot"></i>
+                        <h3 data-translate="features.chatbot.title">AI Chatbot for Orders & FAQs</h3>
+                    </div>
+                    <p data-translate="features.chatbot.description">Automates bookings, takes orders, answers common questions, and collects leads 24/7 on your website and social channels.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.chatbot.1">Menu & product Q&A</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.chatbot.2">Bookings and appointment prompts</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.chatbot.3">Order intake & customer details</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.chatbot.4">Handover to human when needed</span></li>
+                    </ul>
+                </div>
+                
+                <div class="card feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-globe"></i>
+                        <h3 data-translate="features.website.title">Website Included</h3>
+                    </div>
+                    <p data-translate="features.website.description">Clean, fast, mobile-ready website designed for conversions. We build it for you using your photos and brand.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.website.1">Home, Menu/Services, About, Contact</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.website.2">Photo gallery & specials</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.website.3">SEO-ready & analytics</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.website.4">Hosting & ongoing updates</span></li>
+                    </ul>
+                </div>
+                
+                <div class="card feature-card">
+                    <div class="feature-card-header">
+                        <i class="far fa-comment"></i>
+                        <h3 data-translate="features.connect.title">Connect Everywhere</h3>
+                    </div>
+                    <p data-translate="features.connect.description">Add the chatbot to your website and optionally to WhatsApp, Facebook, or Instagram messaging for seamless customer experiences.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.connect.1">Website chat widget</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.connect.2">Facebook/Instagram DMs</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.connect.3">Optional WhatsApp integration</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="features.connect.4">Email & SMS notifications</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section id="howitworks" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="howitworks.eyebrow">Easy onboarding</span>
+                </span>
+                <h2 data-translate="howitworks.title">We launch your site & chatbot in 4 steps</h2>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="card step-card">
+                    <div class="step-card-header">
+                        <i class="fas fa-camera"></i>
+                        <h3><span data-translate="howitworks.step1.number">1.</span> <span data-translate="howitworks.step1.title">Share photos & details</span></h3>
+                    </div>
+                    <p data-translate="howitworks.step1.text">You send us pictures, menu/services, opening hours, and branding.</p>
+                </div>
+                
+                <div class="card step-card">
+                    <div class="step-card-header">
+                        <i class="fas fa-magic"></i>
+                        <h3><span data-translate="howitworks.step2.number">2.</span> <span data-translate="howitworks.step2.title">We design your website</span></h3>
+                    </div>
+                    <p data-translate="howitworks.step2.text">We craft a modern site optimized for mobile and conversions.</p>
+                </div>
+                
+                <div class="card step-card">
+                    <div class="step-card-header">
+                        <i class="fas fa-robot"></i>
+                        <h3><span data-translate="howitworks.step3.number">3.</span> <span data-translate="howitworks.step3.title">We train your chatbot</span></h3>
+                    </div>
+                    <p data-translate="howitworks.step3.text">It learns your menu, services, and policies to handle FAQs and orders.</p>
+                </div>
+                
+                <div class="card step-card">
+                    <div class="step-card-header">
+                        <i class="fas fa-rocket"></i>
+                        <h3><span data-translate="howitworks.step4.number">4.</span> <span data-translate="howitworks.step4.title">Go live & iterate</span></h3>
+                    </div>
+                    <p data-translate="howitworks.step4.text">Launch within days. We monitor and improve the conversations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="pricing.eyebrow">Simple pricing</span>
+                </span>
+                <h2 data-translate="pricing.title">First month free. Then €50/month</h2>
+                <p data-translate="pricing.subtitle">Everything included: website, chatbot, hosting, updates, and analytics.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="card pricing-card">
+                    <div class="price">
+                        <span class="price-amount">€50</span>
+                        <span class="price-interval" data-translate="pricing.interval">/month</span>
+                    </div>
+                    <p data-translate="pricing.description">First month on us. No setup fee for standard packages.</p>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.1">Custom website (up to 5 pages)</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.2">AI chatbot for orders & bookings</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.3">Hosting, SSL, domain support</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.4">Photo gallery & basic SEO</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.5">Email & SMS notifications</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-translate="pricing.features.6">Monthly improvements</span></li>
+                    </ul>
+                    
+                    <div class="pricing-actions">
+                        <button class="btn btn-primary" data-scroll="contact" data-translate="pricing.start">Start free month</button>
+                        <button class="btn btn-outline" data-scroll="faq" data-translate="pricing.questions">Questions? Read FAQ</button>
+                    </div>
+                    
+                    <p class="pricing-note" data-translate="pricing.note">Need more pages or custom integrations? Ask for a quote.</p>
+                </div>
+                
+                <div class="info-cards">
+                    <div class="card info-card">
+                        <div class="info-card-header">
+                            <i class="far fa-calendar-alt"></i>
+                            <h3 data-translate="pricing.why_free.title">Why first month free?</h3>
+                        </div>
+                        <p data-translate="pricing.why_free.text">We want you to see value fast. Try the full service for 30 days. If it doesn't help, cancel without paying.</p>
+                    </div>
+                    
+                    <div class="card info-card">
+                        <div class="info-card-header">
+                            <i class="far fa-building"></i>
+                            <h3 data-translate="pricing.business.title">Built for small businesses</h3>
+                        </div>
+                        <p data-translate="pricing.business.text">Restaurants, cafés, salons, clinics, gyms, and local shops — we tailor the chatbot to your workflows.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="faq.eyebrow">Good to know</span>
+                </span>
+                <h2 data-translate="faq.title">Frequently asked questions</h2>
+            </div>
+            
+            <div class="faq-grid">
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(0)">
+                        <span data-translate="faq.1.question">How does the chatbot organize orders?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-0">
+                        <span data-translate="faq.1.answer">It collects customer selections, contact details, and preferred time, then sends a structured order to your email/SMS or your POS/inbox via integrations. We can enable staff confirmations and automatic follow-ups.</span>
+                    </div>
+                </div>
+                
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(1)">
+                        <span data-translate="faq.2.question">What do you need from us to start?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-1">
+                        <span data-translate="faq.2.answer">Photos, logo, menu/services list, opening hours, contact details, and any policies (delivery area, pricing, etc.). We'll handle copy and layout.</span>
+                    </div>
+                </div>
+                
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(2)">
+                        <span data-translate="faq.3.question">Which channels are supported?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-2">
+                        <span data-translate="faq.3.answer">Website widget by default. Optional Facebook/Instagram DMs and WhatsApp depending on your plan and platform policies.</span>
+                    </div>
+                </div>
+                
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(3)">
+                        <span data-translate="faq.4.question">Can I keep my domain?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-3">
+                        <span data-translate="faq.4.answer">Yes. We connect or purchase/manage a domain for you. SSL and hosting are included.</span>
+                    </div>
+                </div>
+                
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(4)">
+                        <span data-translate="faq.5.question">Is there a contract?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-4">
+                        <span data-translate="faq.5.answer">No long-term contract. Month-to-month after the free first month. Cancel anytime.</span>
+                    </div>
+                </div>
+                
+                <div class="card faq-card">
+                    <button class="faq-question" onclick="toggleFaq(5)">
+                        <span data-translate="faq.6.question">Can I talk to a human?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" id="faq-answer-5">
+                        <span data-translate="faq.6.answer">Always. The bot can hand off to staff instantly via phone, email, or a private inbox.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">
+                    <i class="fas fa-sparkle"></i> <span data-translate="contact.eyebrow">Get started</span>
+                </span>
+                <h2 data-translate="contact.title">Tell us about your business</h2>
+                <p data-translate="contact.subtitle">We'll reply with a draft plan and a timeline to launch your website and chatbot.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="card">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name" data-translate="contact.form.name">Your name</label>
+                                <input type="text" id="name" data-translate="contact.form.name_placeholder" placeholder="Maria Popescu" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" data-translate="contact.form.email">Email</label>
+                                <input type="email" id="email" data-translate="contact.form.email_placeholder" placeholder="you@business.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="business" data-translate="contact.form.business">Business name</label>
+                            <input type="text" id="business" data-translate="contact.form.business_placeholder" placeholder="Popescu Cafe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="website" data-translate="contact.form.website">Website (if any)</label>
+                            <input type="url" id="website" data-translate="contact.form.website_placeholder" placeholder="https://">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="needs" data-translate="contact.form.needs">What do you need?</label>
+                            <textarea id="needs" rows="4" data-translate="contact.form.needs_placeholder" placeholder="Website + chatbot, accept bookings and delivery orders, connect WhatsApp…"></textarea>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <div class="form-note" data-translate="contact.form.agreement">By submitting you agree to our terms and privacy.</div>
+                            <button type="submit" class="btn btn-primary" data-translate="contact.form.submit">Start free month</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="card contact-card">
+                        <div class="contact-card-header">
+                            <i class="fas fa-phone"></i>
+                            <h3 data-translate="contact.talk.title">Talk to us</h3>
+                        </div>
+                        <p data-translate="contact.talk.description">Have questions? We're happy to chat and show a quick demo tailored to your niche.</p>
+                        
+                        <div class="contact-details">
+                            <div>
+                                <i class="fas fa-phone"></i> +(000) 000-0000
+                            </div>
+                            <a href="mailto:hello@botsite.studio">
+                                <i class="far fa-envelope"></i> hello@botsite.studio
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="card contact-card">
+                        <div class="contact-card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3 data-translate="contact.privacy.title">What about privacy?</h3>
+                        </div>
+                        <p data-translate="contact.privacy.description">We follow best practices for data handling and only store what's necessary to provide the service. You own your content and can export data anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <i class="fas fa-robot"></i> <span data-translate="site.name">BotSite Studio</span>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#" data-translate="footer.privacy">Privacy</a>
+                    <a href="#" data-translate="footer.terms">Terms</a>
+                    <a href="#" data-translate="footer.status">Status</a>
+                </div>
+                
+                <div>© 2023 <span data-translate="site.name">BotSite Studio</span>. <span data-translate="footer.rights">All rights reserved.</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.features": "Features",
+                "nav.industries": "Industries",
+                "nav.howitworks": "How it works",
+                "nav.pricing": "Pricing",
+                "nav.faq": "FAQ",
+                "nav.contact": "Contact",
+                "nav.get_started": "Get Started",
+                
+                // Site info
+                "site.name": "BotSite Studio",
+                "footer.rights": "All rights reserved.",
+                
+                // Hero section
+                "hero.trial": "First month free",
+                "hero.title": "Launch your business online with an AI chatbot — website included",
+                "hero.description": "We build a beautiful website for your small business and add a smart chatbot that answers questions, books tables, and organizes orders. You focus on customers, we handle the tech.",
+                "hero.start": "Start free month",
+                "hero.view_pricing": "View pricing",
+                "hero.no_contract": "No contract",
+                "hero.cancel_anytime": "Cancel anytime",
+                "hero.go_live": "Go live in days",
+                
+                // Demo chatbot
+                "demo.tag": "Demo",
+                "demo.preview": "Chatbot preview",
+                "demo.title": "Order & Booking Assistant",
+                "demo.description": "Try a sample conversation below.",
+                "demo.message1": "👋 Hi! I can help with bookings, menu, and orders. What do you need?",
+                "demo.message2": "Book a table for 4 tomorrow at 7pm.",
+                "demo.message3": "Great! Table for 4 reserved for tomorrow 19:00. Shall I send a confirmation by SMS or email?",
+                "demo.message4": "SMS please.",
+                "demo.message5": "Done ✅ Anything else? Today's special is Margherita Pizza.",
+                "demo.placeholder": "Type a message (mock input)",
+                "demo.send": "Send",
+                
+                // Industries section
+                "industries.eyebrow": "Industries",
+                "industries.title": "Businesses we serve",
+                "industries.subtitle": "Our chatbot and website solutions are designed for a variety of small businesses.",
+                "industries.1": "Restaurants & Cafés",
+                "industries.2": "Salons & Spas",
+                "industries.3": "Gyms & Fitness",
+                "industries.4": "Real Estate",
+                "industries.5": "Retail Shops",
+                "industries.6": "Dentists & Clinics",
+                
+                // Features section
+                "features.eyebrow": "What you get",
+                "features.title": "Chatbot + Website. One subscription.",
+                "features.subtitle": "We collect your photos and info, create a modern website, and connect an AI chatbot that answers questions and organizes orders.",
+                
+                "features.chatbot.title": "AI Chatbot for Orders & FAQs",
+                "features.chatbot.description": "Automates bookings, takes orders, answers common questions, and collects leads 24/7 on your website and social channels.",
+                "features.chatbot.1": "Menu & product Q&A",
+                "features.chatbot.2": "Bookings and appointment prompts",
+                "features.chatbot.3": "Order intake & customer details",
+                "features.chatbot.4": "Handover to human when needed",
+                
+                "features.website.title": "Website Included",
+                "features.website.description": "Clean, fast, mobile-ready website designed for conversions. We build it for you using your photos and brand.",
+                "features.website.1": "Home, Menu/Services, About, Contact",
+                "features.website.2": "Photo gallery & specials",
+                "features.website.3": "SEO-ready & analytics",
+                "features.website.4": "Hosting & ongoing updates",
+                
+                "features.connect.title": "Connect Everywhere",
+                "features.connect.description": "Add the chatbot to your website and optionally to WhatsApp, Facebook, or Instagram messaging for seamless customer experiences.",
+                "features.connect.1": "Website chat widget",
+                "features.connect.2": "Facebook/Instagram DMs",
+                "features.connect.3": "Optional WhatsApp integration",
+                "features.connect.4": "Email & SMS notifications",
+                
+                // How it works section
+                "howitworks.eyebrow": "Easy onboarding",
+                "howitworks.title": "We launch your site & chatbot in 4 steps",
+                
+                "howitworks.step1.number": "1.",
+                "howitworks.step1.title": "Share photos & details",
+                "howitworks.step1.text": "You send us pictures, menu/services, opening hours, and branding.",
+                
+                "howitworks.step2.number": "2.",
+                "howitworks.step2.title": "We design your website",
+                "howitworks.step2.text": "We craft a modern site optimized for mobile and conversions.",
+                
+                "howitworks.step3.number": "3.",
+                "howitworks.step3.title": "We train your chatbot",
+                "howitworks.step3.text": "It learns your menu, services, and policies to handle FAQs and orders.",
+                
+                "howitworks.step4.number": "4.",
+                "howitworks.step4.title": "Go live & iterate",
+                "howitworks.step4.text": "Launch within days. We monitor and improve the conversations.",
+                
+                // Pricing section
+                "pricing.eyebrow": "Simple pricing",
+                "pricing.title": "First month free. Then €50/month",
+                "pricing.subtitle": "Everything included: website, chatbot, hosting, updates, and analytics.",
+                "pricing.interval": "/month",
+                "pricing.description": "First month on us. No setup fee for standard packages.",
+                
+                "pricing.features.1": "Custom website (up to 5 pages)",
+                "pricing.features.2": "AI chatbot for orders & bookings",
+                "pricing.features.3": "Hosting, SSL, domain support",
+                "pricing.features.4": "Photo gallery & basic SEO",
+                "pricing.features.5": "Email & SMS notifications",
+                "pricing.features.6": "Monthly improvements",
+                
+                "pricing.start": "Start free month",
+                "pricing.questions": "Questions? Read FAQ",
+                "pricing.note": "Need more pages or custom integrations? Ask for a quote.",
+                
+                "pricing.why_free.title": "Why first month free?",
+                "pricing.why_free.text": "We want you to see value fast. Try the full service for 30 days. If it doesn't help, cancel without paying.",
+                
+                "pricing.business.title": "Built for small businesses",
+                "pricing.business.text": "Restaurants, cafés, salons, clinics, gyms, and local shops — we tailor the chatbot to your workflows.",
+                
+                // FAQ section
+                "faq.eyebrow": "Good to know",
+                "faq.title": "Frequently asked questions",
+                
+                "faq.1.question": "How does the chatbot organize orders?",
+                "faq.1.answer": "It collects customer selections, contact details, and preferred time, then sends a structured order to your email/SMS or your POS/inbox via integrations. We can enable staff confirmations and automatic follow-ups.",
+                
+                "faq.2.question": "What do you need from us to start?",
+                "faq.2.answer": "Photos, logo, menu/services list, opening hours, contact details, and any policies (delivery area, pricing, etc.). We'll handle copy and layout.",
+                
+                "faq.3.question": "Which channels are supported?",
+                "faq.3.answer": "Website widget by default. Optional Facebook/Instagram DMs and WhatsApp depending on your plan and platform policies.",
+                
+                "faq.4.question": "Can I keep my domain?",
+                "faq.4.answer": "Yes. We connect or purchase/manage a domain for you. SSL and hosting are included.",
+                
+                "faq.5.question": "Is there a contract?",
+                "faq.5.answer": "No long-term contract. Month-to-month after the free first month. Cancel anytime.",
+                
+                "faq.6.question": "Can I talk to a human?",
+                "faq.6.answer": "Always. The bot can hand off to staff instantly via phone, email, or a private inbox.",
+                
+                // Contact section
+                "contact.eyebrow": "Get started",
+                "contact.title": "Tell us about your business",
+                "contact.subtitle": "We'll reply with a draft plan and a timeline to launch your website and chatbot.",
+                
+                "contact.form.name": "Your name",
+                "contact.form.name_placeholder": "Maria Popescu",
+                "contact.form.email": "Email",
+                "contact.form.email_placeholder": "you@business.com",
+                "contact.form.business": "Business name",
+                "contact.form.business_placeholder": "Popescu Cafe",
+                "contact.form.website": "Website (if any)",
+                "contact.form.website_placeholder": "https://",
+                "contact.form.needs": "What do you need?",
+                "contact.form.needs_placeholder": "Website + chatbot, accept bookings and delivery orders, connect WhatsApp…",
+                "contact.form.agreement": "By submitting you agree to our terms and privacy.",
+                "contact.form.submit": "Start free month",
+                
+                "contact.talk.title": "Talk to us",
+                "contact.talk.description": "Have questions? We're happy to chat and show a quick demo tailored to your niche.",
+                
+                "contact.privacy.title": "What about privacy?",
+                "contact.privacy.description": "We follow best practices for data handling and only store what's necessary to provide the service. You own your content and can export data anytime.",
+                
+                // Footer
+                "footer.privacy": "Privacy",
+                "footer.terms": "Terms",
+                "footer.status": "Status"
+            },
+            es: {
+                // Navigation
+                "nav.features": "Características",
+                "nav.industries": "Industrias",
+                "nav.howitworks": "Cómo funciona",
+                "nav.pricing": "Precios",
+                "nav.faq": "Preguntas Frecuentes",
+                "nav.contact": "Contacto",
+                "nav.get_started": "Comenzar",
+                
+                // Site info
+                "site.name": "BotSite Studio",
+                "footer.rights": "Todos los derechos reservados.",
+                
+                // Hero section
+                "hero.trial": "Primer mes gratis",
+                "hero.title": "Lanza tu negocio en línea con un chatbot de IA — sitio web incluido",
+                "hero.description": "Construimos un sitio web hermoso para tu pequeña empresa y agregamos un chatbot inteligente que responde preguntas, reserva mesas y organiza pedidos. Tú te enfocas en los clientes, nosotros nos encargamos de la tecnología.",
+                "hero.start": "Comenzar mes gratis",
+                "hero.view_pricing": "Ver precios",
+                "hero.no_contract": "Sin contrato",
+                "hero.cancel_anytime": "Cancela en cualquier momento",
+                "hero.go_live": "En vivo en días",
+                
+                // Demo chatbot
+                "demo.tag": "Demostración",
+                "demo.preview": "Vista previa del chatbot",
+                "demo.title": "Asistente de Pedidos y Reservas",
+                "demo.description": "Prueba una conversación de ejemplo a continuación.",
+                "demo.message1": "👋 ¡Hola! Puedo ayudar con reservas, menú y pedidos. ¿Qué necesitas?",
+                "demo.message2": "Reserva una mesa para 4 mañana a las 7pm.",
+                "demo.message3": "¡Excelente! Mesa para 4 reservada para mañana a las 19:00. ¿Envío confirmación por SMS o email?",
+                "demo.message4": "SMS por favor.",
+                "demo.message5": "Hecho ✅ ¿Algo más? La especialidad de hoy es Pizza Margherita.",
+                "demo.placeholder": "Escribe un mensaje (entrada simulada)",
+                "demo.send": "Enviar",
+                
+                // Industries section
+                "industries.eyebrow": "Industrias",
+                "industries.title": "Empresas que servimos",
+                "industries.subtitle": "Nuestras soluciones de chatbot y sitio web están diseñadas para una variedad de pequeñas empresas.",
+                "industries.1": "Restaurantes y Cafés",
+                "industries.2": "Salones y Spas",
+                "industries.3": "Gimnasios y Fitness",
+                "industries.4": "Bienes Raíces",
+                "industries.5": "Tiendas Minoristas",
+                "industries.6": "Dentistas y Clínicas",
+                
+                // Features section
+                "features.eyebrow": "Lo que obtienes",
+                "features.title": "Chatbot + Sitio web. Una suscripción.",
+                "features.subtitle": "Recolectamos tus fotos e información, creamos un sitio web moderno y conectamos un chatbot de IA que responde preguntas y organiza pedidos.",
+                
+                "features.chatbot.title": "Chatbot de IA para Pedidos y Preguntas Frecuentes",
+                "features.chatbot.description": "Automatiza reservas, toma pedidos, responde preguntas comunes y recoge leads 24/7 en tu sitio web y canales sociales.",
+                "features.chatbot.1": "Preguntas y respuestas sobre menú y productos",
+                "features.chatbot.2": "Reservas y recordatorios de citas",
+                "features.chatbot.3": "Toma de pedidos y detalles del cliente",
+                "features.chatbot.4": "Transferencia a humano cuando sea necesario",
+                
+                "features.website.title": "Sitio web incluido",
+                "features.website.description": "Sitio web limpio, rápido y optimizado para móviles diseñado para conversiones. Lo construimos para ti usando tus fotos y marca.",
+                "features.website.1": "Inicio, Menú/Servicios, Acerca de, Contacto",
+                "features.website.2": "Galería de fotos y especiales",
+                "features.website.3": "Optimizado para SEO y analíticas",
+                "features.website.4": "Alojamiento y actualizaciones continuas",
+                
+                "features.connect.title": "Conecta en todas partes",
+                "features.connect.description": "Agrega el chatbot a tu sitio web y opcionalmente a WhatsApp, Facebook o Instagram para experiencias de cliente perfectas.",
+                "features.connect.1": "Widget de chat en el sitio web",
+                "features.connect.2": "Mensajes directos de Facebook/Instagram",
+                "features.connect.3": "Integración opcional de WhatsApp",
+                "features.connect.4": "Notificaciones por email y SMS",
+                
+                // How it works section
+                "howitworks.eyebrow": "Incorporación fácil",
+                "howitworks.title": "Lanzamos tu sitio y chatbot en 4 pasos",
+                
+                "howitworks.step1.number": "1.",
+                "howitworks.step1.title": "Comparte fotos y detalles",
+                "howitworks.step1.text": "Nos envías imágenes, menú/servicios, horario de apertura y marca.",
+                
+                "howitworks.step2.number": "2.",
+                "howitworks.step2.title": "Diseñamos tu sitio web",
+                "howitworks.step2.text": "Creamos un sitio moderno optimizado para móviles y conversiones.",
+                
+                "howitworks.step3.number": "3.",
+                "howitworks.step3.title": "Entrenamos tu chatbot",
+                "howitworks.step3.text": "Aprende tu menú, servicios y políticas para manejar preguntas frecuentes y pedidos.",
+                
+                "howitworks.step4.number": "4.",
+                "howitworks.step4.title": "Lanza e itera",
+                "howitworks.step4.text": "Lanza en días. Monitoreamos y mejoramos las conversaciones.",
+                
+                // Pricing section
+                "pricing.eyebrow": "Precios simples",
+                "pricing.title": "Primer mes gratis. Luego 50€/mes",
+                "pricing.subtitle": "Todo incluido: sitio web, chatbot, alojamiento, actualizaciones y analíticas.",
+                "pricing.interval": "/mes",
+                "pricing.description": "Primer mes por nuestra cuenta. Sin tarifa de configuración para paquetes estándar.",
+                
+                "pricing.features.1": "Sitio web personalizado (hasta 5 páginas)",
+                "pricing.features.2": "Chatbot de IA para pedidos y reservas",
+                "pricing.features.3": "Alojamiento, SSL, soporte de dominio",
+                "pricing.features.4": "Galería de fotos y SEO básico",
+                "pricing.features.5": "Notificaciones por email y SMS",
+                "pricing.features.6": "Mejoras mensuales",
+                
+                "pricing.start": "Comenzar mes gratis",
+                "pricing.questions": "¿Preguntas? Lee las FAQ",
+                "pricing.note": "¿Necesitas más páginas o integraciones personalizadas? Pide un presupuesto.",
+                
+                "pricing.why_free.title": "¿Por qué el primer mes es gratis?",
+                "pricing.why_free.text": "Queremos que veas valor rápidamente. Prueba el servicio completo durante 30 días. Si no te ayuda, cancela sin pagar.",
+                
+                "pricing.business.title": "Construido para pequeñas empresas",
+                "pricing.business.text": "Restaurantes, cafés, salones, clínicas, gimnasios y tiendas locales: adaptamos el chatbot a tus flujos de trabajo.",
+                
+                // FAQ section
+                "faq.eyebrow": "Es bueno saber",
+                "faq.title": "Preguntas frecuentes",
+                
+                "faq.1.question": "¿Cómo organiza los pedidos el chatbot?",
+                "faq.1.answer": "Recopila selecciones de clientes, detalles de contacto y hora preferida, luego envía un pedido estructurado a tu email/SMS o a tu TPV/buzón a través de integraciones. Podemos habilitar confirmaciones del personal y seguimientos automáticos.",
+                
+                "faq.2.question": "¿Qué necesitan de nosotros para comenzar?",
+                "faq.2.answer": "Fotos, logo, lista de menú/servicios, horario de apertura, detalles de contacto y cualquier política (área de entrega, precios, etc.). Nos encargamos del texto y el diseño.",
+                
+                "faq.3.question": "¿Qué canales son compatibles?",
+                "faq.3.answer": "Widget del sitio web por defecto. Opcionalmente mensajes directos de Facebook/Instagram y WhatsApp dependiendo de tu plan y políticas de la plataforma.",
+                
+                "faq.4.question": "¿Puedo mantener mi dominio?",
+                "faq.4.answer": "Sí. Conectamos o compramos/administramos un dominio para ti. SSL y alojamiento están incluidos.",
+                
+                "faq.5.question": "¿Hay contrato?",
+                "faq.5.answer": "No hay contrato a largo plazo. Mes a mes después del primer mes gratis. Cancela en cualquier momento.",
+                
+                "faq.6.question": "¿Puedo hablar con un humano?",
+                "faq.6.answer": "Siempre. El bot puede transferir al personal instantáneamente por teléfono, email o un buzón privado.",
+                
+                // Contact section
+                "contact.eyebrow": "Comienza",
+                "contact.title": "Cuéntanos sobre tu negocio",
+                "contact.subtitle": "Responderemos con un plan preliminar y un cronograma para lanzar tu sitio web y chatbot.",
+                
+                "contact.form.name": "Tu nombre",
+                "contact.form.name_placeholder": "María López",
+                "contact.form.email": "Email",
+                "contact.form.email_placeholder": "tu@negocio.com",
+                "contact.form.business": "Nombre del negocio",
+                "contact.form.business_placeholder": "Café López",
+                "contact.form.website": "Sitio web (si tienes)",
+                "contact.form.website_placeholder": "https://",
+                "contact.form.needs": "¿Qué necesitas?",
+                "contact.form.needs_placeholder": "Sitio web + chatbot, aceptar reservas y pedidos a domicilio, conectar WhatsApp…",
+                "contact.form.agreement": "Al enviar, aceptas nuestros términos y privacidad.",
+                "contact.form.submit": "Comenzar mes gratis",
+                
+                "contact.talk.title": "Habla con nosotros",
+                "contact.talk.description": "¿Tienes preguntas? Estamos encantados de charlar y mostrar una demo rápida adaptada a tu nicho.",
+                
+                "contact.privacy.title": "¿Qué hay de la privacidad?",
+                "contact.privacy.description": "Seguimos las mejores prácticas para el manejo de datos y solo almacenamos lo necesario para proporcionar el servicio. Eres dueño de tu contenido y puedes exportar datos en cualquier momento.",
+                
+                // Footer
+                "footer.privacy": "Privacidad",
+                "footer.terms": "Términos",
+                "footer.status": "Estado"
+            },
+            fr: {
+                // Navigation
+                "nav.features": "Fonctionnalités",
+                "nav.industries": "Industries",
+                "nav.howitworks": "Comment ça marche",
+                "nav.pricing": "Tarifs",
+                "nav.faq": "FAQ",
+                "nav.contact": "Contact",
+                "nav.get_started": "Commencer",
+                
+                // Site info
+                "site.name": "BotSite Studio",
+                "footer.rights": "Tous droits réservés.",
+                
+                // Hero section
+                "hero.trial": "Premier mois gratuit",
+                "hero.title": "Lancez votre entreprise en ligne avec un chatbot IA — site web inclus",
+                "hero.description": "Nous construisons un beau site web pour votre petite entreprise et ajoutons un chatbot intelligent qui répond aux questions, réserve des tables et organise les commandes. Vous vous concentrez sur les clients, nous nous occupons de la technologie.",
+                "hero.start": "Commencer le mois gratuit",
+                "hero.view_pricing": "Voir les tarifs",
+                "hero.no_contract": "Sans engagement",
+                "hero.cancel_anytime": "Annulez à tout moment",
+                "hero.go_live": "Mise en ligne en quelques jours",
+                
+                // Demo chatbot
+                "demo.tag": "Démo",
+                "demo.preview": "Aperçu du chatbot",
+                "demo.title": "Assistant de Commandes et Réservations",
+                "demo.description": "Essayez un exemple de conversation ci-dessous.",
+                "demo.message1": "👋 Bonjour ! Je peux aider avec les réservations, le menu et les commandes. De quoi avez-vous besoin ?",
+                "demo.message2": "Réservez une table pour 4 demain à 19h.",
+                "demo.message3": "Super ! Table pour 4 réservée pour demain 19:00. Dois-je envoyer une confirmation par SMS ou email ?",
+                "demo.message4": "SMS s'il vous plaît.",
+                "demo.message5": "Fait ✅ Autre chose ? La spécialité du jour est la Pizza Margherita.",
+                "demo.placeholder": "Tapez un message (saisie simulée)",
+                "demo.send": "Envoyer",
+                
+                // Industries section
+                "industries.eyebrow": "Industries",
+                "industries.title": "Entreprises que nous servons",
+                "industries.subtitle": "Nos solutions de chatbot et de site web sont conçues pour une variété de petites entreprises.",
+                "industries.1": "Restaurants et Cafés",
+                "industries.2": "Salons et Spas",
+                "industries.3": "Salles de sport et Fitness",
+                "industries.4": "Immobilier",
+                "industries.5": "Boutiques de détail",
+                "industries.6": "Dentistes et Cliniques",
+                
+                // Features section
+                "features.eyebrow": "Ce que vous obtenez",
+                "features.title": "Chatbot + Site web. Un abonnement.",
+                "features.subtitle": "Nous collectons vos photos et informations, créons un site web moderne et connectons un chatbot IA qui répond aux questions et organise les commandes.",
+                
+                "features.chatbot.title": "Chatbot IA pour commandes et FAQ",
+                "features.chatbot.description": "Automatise les réservations, prend les commandes, répond aux questions courantes et collecte des leads 24/7 sur votre site web et canaux sociaux.",
+                "features.chatbot.1": "Questions et réponses sur le menu et les produits",
+                "features.chatbot.2": "Réservations et rappels de rendez-vous",
+                "features.chatbot.3": "Prise de commande et détails clients",
+                "features.chatbot.4": "Transfert à un humain si nécessaire",
+                
+                "features.website.title": "Site web inclus",
+                "features.website.description": "Site web propre, rapide et adapté aux mobiles conçu pour les conversions. Nous le construisons pour vous en utilisant vos photos et marque.",
+                "features.website.1": "Accueil, Menu/Services, À propos, Contact",
+                "features.website.2": "Galerie photo et offres spéciales",
+                "features.website.3": "Optimisé pour le SEO et analytics",
+                "features.website.4": "Hébergement et mises à jour continues",
+                
+                "features.connect.title": "Connectez partout",
+                "features.connect.description": "Ajoutez le chatbot à votre site web et optionnellement à WhatsApp, Facebook ou Instagram pour des expériences client transparentes.",
+                "features.connect.1": "Widget de chat sur le site web",
+                "features.connect.2": "Messages directs Facebook/Instagram",
+                "features.connect.3": "Intégration optionnelle WhatsApp",
+                "features.connect.4": "Notifications par email et SMS",
+                
+                // How it works section
+                "howitworks.eyebrow": "Intégration facile",
+                "howitworks.title": "Nous lançons votre site et chatbot en 4 étapes",
+                
+                "howitworks.step1.number": "1.",
+                "howitworks.step1.title": "Partagez photos et détails",
+                "howitworks.step1.text": "Vous nous envoyez des images, menu/services, heures d'ouverture et identité de marque.",
+                
+                "howitworks.step2.number": "2.",
+                "howitworks.step2.title": "Nous concevons votre site web",
+                "howitworks.step2.text": "Nous créons un site moderne optimisé pour mobile et les conversions.",
+                
+                "howitworks.step3.number": "3.",
+                "howitworks.step3.title": "Nous formons votre chatbot",
+                "howitworks.step3.text": "Il apprend votre menu, services et politiques pour gérer les FAQ et commandes.",
+                
+                "howitworks.step4.number": "4.",
+                "howitworks.step4.title": "Mise en ligne et itération",
+                "howitworks.step4.text": "Lancez en quelques jours. Nous surveillons et améliorons les conversations.",
+                
+                // Pricing section
+                "pricing.eyebrow": "Tarification simple",
+                "pricing.title": "Premier mois gratuit. Puis 50€/mois",
+                "pricing.subtitle": "Tout inclus : site web, chatbot, hébergement, mises à jour et analytics.",
+                "pricing.interval": "/mois",
+                "pricing.description": "Premier mois offert. Pas de frais d'installation pour les forfaits standard.",
+                
+                "pricing.features.1": "Site web personnalisé (jusqu'à 5 pages)",
+                "pricing.features.2": "Chatbot IA pour commandes et réservations",
+                "pricing.features.3": "Hébergement, SSL, support domaine",
+                "pricing.features.4": "Galerie photo et SEO de base",
+                "pricing.features.5": "Notifications par email and SMS",
+                "pricing.features.6": "Améliorations mensuelles",
+                
+                "pricing.start": "Commencer le mois gratuit",
+                "pricing.questions": "Des questions? Lisez la FAQ",
+                "pricing.note": "Besoin de plus de pages ou d'intégrations personnalisées? Demandez un devis.",
+                
+                "pricing.why_free.title": "Pourquoi le premier mois est-il gratuit?",
+                "pricing.why_free.text": "Nous voulons que vous voyiez la valeur rapidement. Essayez le service complet pendant 30 jours. Si cela n'aide pas, annulez sans payer.",
+                
+                "pricing.business.title": "Conçu pour les petites entreprises",
+                "pricing.business.text": "Restaurants, cafés, salons, cliniques, salles de sport et magasins locaux — nous adaptons le chatbot à vos flux de travail.",
+                
+                // FAQ section
+                "faq.eyebrow": "Bon à savoir",
+                "faq.title": "Foire aux questions",
+                
+                "faq.1.question": "Comment le chatbot organise-t-il les commandes?",
+                "faq.1.answer": "Il collecte les sélections des clients, les coordonnées et l'horaire préféré, puis envoie une commande structurée à votre email/SMS ou votre PDV/boîte de réception via des intégrations. Nous pouvons activer les confirmations du personnel et les suivis automatiques.",
+                
+                "faq.2.question": "De quoi avez-vous besoin de notre part pour commencer?",
+                "faq.2.answer": "Photos, logo, liste de menu/services, heures d'ouverture, coordonnées et toutes politiques (zone de livraison, tarification, etc.). Nous nous occupons du texte et de la mise en page.",
+                
+                "faq.3.question": "Quels canaux sont pris en charge?",
+                "faq.3.answer": "Widget de site web par défaut. Optionnellement messages directs Facebook/Instagram et WhatsApp selon votre forfait et politiques de plateforme.",
+                
+                "faq.4.question": "Puis-je garder mon domaine?",
+                "faq.4.answer": "Oui. Nous connectons ou achetons/gérons un domaine pour vous. SSL et hébergement sont inclus.",
+                
+                "faq.5.question": "Y a-t-il un contrat?",
+                "faq.5.answer": "Pas de contrat à long terme. Mensuel après le premier mois gratuit. Annulez à tout moment.",
+                
+                "faq.6.question": "Puis-je parler à un humain?",
+                "faq.6.answer": "Toujours. Le bot peut transférer au personnel instantanément par téléphone, email ou boîte de réception privée.",
+                
+                // Contact section
+                "contact.eyebrow": "Commencer",
+                "contact.title": "Parlez-nous de votre entreprise",
+                "contact.subtitle": "Nous répondrons avec un plan préliminaire et un calendrier pour lancer votre site web et chatbot.",
+                
+                "contact.form.name": "Votre nom",
+                "contact.form.name_placeholder": "Marie Dupont",
+                "contact.form.email": "Email",
+                "contact.form.email_placeholder": "vous@entreprise.com",
+                "contact.form.business": "Nom de l'entreprise",
+                "contact.form.business_placeholder": "Café Dupont",
+                "contact.form.website": "Site web (si vous en avez)",
+                "contact.form.website_placeholder": "https://",
+                "contact.form.needs": "De quoi avez-vous besoin?",
+                "contact.form.needs_placeholder": "Site web + chatbot, accepter les réservations et commandes de livraison, connecter WhatsApp…",
+                "contact.form.agreement": "En soumettant, vous acceptez nos conditions et confidentialité.",
+                "contact.form.submit": "Commencer le mois gratuit",
+                
+                "contact.talk.title": "Parlez-nous",
+                "contact.talk.description": "Des questions? Nous sommes heureux de discuter et de montrer une démo rapide adaptée à votre niche.",
+                
+                "contact.privacy.title": "Qu'en est-il de la confidentialité?",
+                "contact.privacy.description": "Nous suivons les meilleures pratiques pour la gestion des données et ne stockons que le nécessaire pour fournir le service. Vous possédez votre contenu et pouvez exporter les données à tout moment.",
+                
+                // Footer
+                "footer.privacy": "Confidentialité",
+                "footer.terms": "Conditions",
+                "footer.status": "Statut"
+            },
+            pt: {
+                // Navigation
+                "nav.features": "Recursos",
+                "nav.industries": "Indústrias",
+                "nav.howitworks": "Como funciona",
+                "nav.pricing": "Preços",
+                "nav.faq": "Perguntas Frequentes",
+                "nav.contact": "Contato",
+                "nav.get_started": "Começar",
+                
+                // Site info
+                "site.name": "BotSite Studio",
+                "footer.rights": "Todos os direitos reservados.",
+                
+                // Hero section
+                "hero.trial": "Primeiro mês grátis",
+                "hero.title": "Lance seu negócio online com um chatbot de IA — site incluído",
+                "hero.description": "Construímos um site bonito para seu pequeno negócio e adicionamos um chatbot inteligente que responde perguntas, reserva mesas e organiza pedidos. Você foca nos clientes, nós cuidamos da tecnologia.",
+                "hero.start": "Iniciar mês grátis",
+                "hero.view_pricing": "Ver preços",
+                "hero.no_contract": "Sem contrato",
+                "hero.cancel_anytime": "Cancele a qualquer momento",
+                "hero.go_live": "No ar em dias",
+                
+                // Demo chatbot
+                "demo.tag": "Demo",
+                "demo.preview": "Visualização do chatbot",
+                "demo.title": "Assistente de Pedidos e Reservas",
+                "demo.description": "Experimente uma conversa de exemplo abaixo.",
+                "demo.message1": "👋 Oi! Posso ajudar com reservas, cardápio e pedidos. O que você precisa?",
+                "demo.message2": "Reserve uma mesa para 4 amanhã às 19h.",
+                "demo.message3": "Ótimo! Mesa para 4 reservada para amanhã 19:00. Envio confirmação por SMS ou email?",
+                "demo.message4": "SMS por favor.",
+                "demo.message5": "Pronto ✅ Mais alguma coisa? A especialidade de hoje é Pizza Margherita.",
+                "demo.placeholder": "Digite uma mensagem (entrada simulada)",
+                "demo.send": "Enviar",
+                
+                // Industries section
+                "industries.eyebrow": "Indústrias",
+                "industries.title": "Empresas que atendemos",
+                "industries.subtitle": "Nossas soluções de chatbot e site são projetadas para uma variedade de pequenas empresas.",
+                "industries.1": "Restaurantes e Cafés",
+                "industries.2": "Salões e Spas",
+                "industries.3": "Academias e Fitness",
+                "industries.4": "Imobiliária",
+                "industries.5": "Lojas de Varejo",
+                "industries.6": "Dentistas e Clínicas",
+                
+                // Features section
+                "features.eyebrow": "O que você obtém",
+                "features.title": "Chatbot + Site. Uma assinatura.",
+                "features.subtitle": "Coletamos suas fotos e informações, criamos um site moderno e conectamos um chatbot de IA que responde perguntas e organiza pedidos.",
+                
+                "features.chatbot.title": "Chatbot de IA para Pedidos e Perguntas Frequentes",
+                "features.chatbot.description": "Automatiza reservas, recebe pedidos, responde perguntas comuns e coleta leads 24/7 no seu site e canais sociais.",
+                "features.chatbot.1": "Perguntas e respostas sobre menu e produtos",
+                "features.chatbot.2": "Reservas e lembretes de agendamento",
+                "features.chatbot.3": "Recebimento de pedidos e detalhes do cliente",
+                "features.chatbot.4": "Transferência para humano quando necessário",
+                
+                "features.website.title": "Site Incluído",
+                "features.website.description": "Site limpo, rápido e pronto para dispositivos móveis, projetado para conversões. Nós o construímos para você usando suas fotos e marca.",
+                "features.website.1": "Início, Menu/Serviços, Sobre, Contato",
+                "features.website.2": "Galeria de fotos e especiais",
+                "features.website.3": "Pronto para SEO e analytics",
+                "features.website.4": "Hospedagem e atualizações contínuas",
+                
+                "features.connect.title": "Conecte em todos os lugares",
+                "features.connect.description": "Adicione o chatbot ao seu site e opcionalmente ao WhatsApp, Facebook ou Instagram para experiências perfeitas do cliente.",
+                "features.connect.1": "Widget de chat no site",
+                "features.connect.2": "Mensagens diretas do Facebook/Instagram",
+                "features.connect.3": "Integração opcional do WhatsApp",
+                "features.connect.4": "Notificações por email e SMS",
+                
+                // How it works section
+                "howitworks.eyebrow": "Integração fácil",
+                "howitworks.title": "Lançamos seu site e chatbot em 4 etapas",
+                
+                "howitworks.step1.number": "1.",
+                "howitworks.step1.title": "Compartilhe fotos e detalhes",
+                "howitworks.step1.text": "Você nos envia imagens, menu/serviços, horário de funcionamento e branding.",
+                
+                "howitworks.step2.number": "2.",
+                "howitworks.step2.title": "Projetamos seu site",
+                "howitworks.step2.text": "Criamos um site moderno otimizado para dispositivos móveis e conversões.",
+                
+                "howitworks.step3.number": "3.",
+                "howitworks.step3.title": "Treinamos seu chatbot",
+                "howitworks.step3.text": "Ele aprende seu menu, serviços e políticas para lidar com perguntas frequentes e pedidos.",
+                
+                "howitworks.step4.number": "4.",
+                "howitworks.step4.title": "Vá ao vivo e itere",
+                "howitworks.step4.text": "Lançamento em dias. Monitoramos e melhoramos as conversas.",
+                
+                // Pricing section
+                "pricing.eyebrow": "Preços simples",
+                "pricing.title": "Primeiro mês grátis. Depois 50€/mês",
+                "pricing.subtitle": "Tudo incluído: site, chatbot, hospedagem, atualizações e analytics.",
+                "pricing.interval": "/mês",
+                "pricing.description": "Primeiro mês por nossa conta. Sem taxa de configuração para pacotes padrão.",
+                
+                "pricing.features.1": "Site personalizado (até 5 páginas)",
+                "pricing.features.2": "Chatbot de IA para pedidos e reservas",
+                "pricing.features.3": "Hospedagem, SSL, suporte a domínio",
+                "pricing.features.4": "Galeria de fotos e SEO básico",
+                "pricing.features.5": "Notificações por email e SMS",
+                "pricing.features.6": "Melhorias mensais",
+                
+                "pricing.start": "Iniciar mês grátis",
+                "pricing.questions": "Perguntas? Leia as FAQ",
+                "pricing.note": "Precisa de mais páginas ou integrações personalizadas? Peça um orçamento.",
+                
+                "pricing.why_free.title": "Por que o primeiro mês é grátis?",
+                "pricing.why_free.text": "Queremos que você veja valor rapidamente. Experimente o serviço completo por 30 días. Se não ajudar, cancele sem pagar.",
+                
+                "pricing.business.title": "Construído para pequenas empresas",
+                "pricing.business.text": "Restaurantes, cafés, salões, clínicas, academias e lojas locais — adaptamos o chatbot aos seus fluxos de trabalho.",
+                
+                // FAQ section
+                "faq.eyebrow": "Bom saber",
+                "faq.title": "Perguntas frequentes",
+                
+                "faq.1.question": "Como o chatbot organiza os pedidos?",
+                "faq.1.answer": "Ele coleta seleções de clientes, detalhes de contato e horário preferido, depois envia um pedido estruturado para seu email/SMS ou seu PDV/caixa de entrada via integrações. Podemos ativar confirmações de equipe e acompanhamentos automáticos.",
+                
+                "faq.2.question": "O que vocês precisam de nós para começar?",
+                "faq.2.answer": "Fotos, logo, lista de menu/serviços, horário de funcionamento, detalhes de contato e quaisquer políticas (área de entrega, preços, etc.). Cuidamos do texto e layout.",
+                
+                "faq.3.question": "Quais canais são suportados?",
+                "faq.3.answer": "Widget do site por padrão. Opcionalmente mensagens diretas do Facebook/Instagram and WhatsApp dependendo do seu plano e políticas da plataforma.",
+                
+                "faq.4.question": "Posso manter meu domínio?",
+                "faq.4.answer": "Sim. Conectamos ou compramos/gerenciamos um domínio para você. SSL e hospedagem estão incluídos.",
+                
+                "faq.5.question": "Há contrato?",
+                "faq.5.answer": "Sem contrato de longo prazo. Mês a mês após o primeiro mês grátis. Cancele a qualquer momento.",
+                
+                "faq.6.question": "Posso falar com um humano?",
+                "faq.6.answer": "Sempre. O bot pode transferir para a equipe instantaneamente por telefone, email ou uma caixa de entrada privada.",
+                
+                // Contact section
+                "contact.eyebrow": "Comece",
+                "contact.title": "Conte-nos sobre seu negócio",
+                "contact.subtitle": "Responderemos com um plano preliminar e um cronograma para lançar seu site e chatbot.",
+                
+                "contact.form.name": "Seu nome",
+                "contact.form.name_placeholder": "Maria Silva",
+                "contact.form.email": "Email",
+                "contact.form.email_placeholder": "voce@negocio.com",
+                "contact.form.business": "Nome do negócio",
+                "contact.form.business_placeholder": "Café Silva",
+                "contact.form.website": "Site (se tiver)",
+                "contact.form.website_placeholder": "https://",
+                "contact.form.needs": "O que você precisa?",
+                "contact.form.needs_placeholder": "Site + chatbot, aceitar reservas e pedidos de entrega, conectar WhatsApp…",
+                "contact.form.agreement": "Ao enviar, você concorda com nossos termos e privacidade.",
+                "contact.form.submit": "Iniciar mês grátis",
+                
+                "contact.talk.title": "Fale conosco",
+                "contact.talk.description": "Tem perguntas? Estamos felizes em conversar e mostrar uma demonstração rápida adaptada ao seu nicho.",
+                
+                "contact.privacy.title": "E a privacidade?",
+                "contact.privacy.description": "Seguimos as melhores práticas para manipulação de dados e armazenamos apenas o necessário para fornecer o serviço. Você é dono do seu conteúdo e pode exportar dados a qualquer momento.",
+                
+                // Footer
+                "footer.privacy": "Privacidade",
+                "footer.terms": "Termos",
+                "footer.status": "Status"
+            },
+            ru: {
+                // Navigation
+                "nav.features": "Возможности",
+                "nav.industries": "Отрасли",
+                "nav.howitworks": "Как это работает",
+                "nav.pricing": "Цены",
+                "nav.faq": "Частые вопросы",
+                "nav.contact": "Контакт",
+                "nav.get_started": "Начать",
+                
+                // Site info
+                "site.name": "BotSite Studio",
+                "footer.rights": "Все права защищены.",
+                
+                // Hero section
+                "hero.trial": "Первый месяц бесплатно",
+                "hero.title": "Запустите свой бизнес онлайн с ИИ-чатом — сайт включен",
+                "hero.description": "Мы создаем красивый сайт для вашего малого бизнеса и добавляем умный чат-бот, который отвечает на вопросы, бронирует столы и организует заказы. Вы сосредотачиваетесь на клиентах, мы занимаемся технологиями.",
+                "hero.start": "Начать бесплатный месяц",
+                "hero.view_pricing": "Посмотреть цены",
+                "hero.no_contract": "Без контракта",
+                "hero.cancel_anytime": "Отменить в любое время",
+                "hero.go_live": "Запуск за несколько дней",
+                
+                // Demo chatbot
+                "demo.tag": "Демо",
+                "demo.preview": "Предпросмотр чат-бота",
+                "demo.title": "Помощник по заказам и бронированиям",
+                "demo.description": "Попробуйте пример разговора ниже.",
+                "demo.message1": "👋 Привет! Я могу помочь с бронированиями, меню и заказами. Что вам нужно?",
+                "demo.message2": "Забронируйте стол на 4 завтра в 7 вечера.",
+                "demo.message3": "Отлично! Стол на 4 забронирован на завтра 19:00. Прислать подтверждение по SMS или email?",
+                "demo.message4": "SMS, пожалуйста.",
+                "demo.message5": "Готово ✅ Что-нибудь еще? Сегодняшнее специальное предложение - Пицца Маргарита.",
+                "demo.placeholder": "Введите сообщение (моковый ввод)",
+                "demo.send": "Отправить",
+                
+                // Industries section
+                "industries.eyebrow": "Отрасли",
+                "industries.title": "Бизнесы, которым мы служим",
+                "industries.subtitle": "Наши решения для чат-ботов и веб-сайтов предназначены для различных малых предприятий.",
+                "industries.1": "Рестораны и Кафе",
+                "industries.2": "Салоны и Спа",
+                "industries.3": "Тренажерные залы и Фитнес",
+                "industries.4": "Недвижимость",
+                "industries.5": "Розничные магазины",
+                "industries.6": "Стоматологи и Клиники",
+                
+                // Features section
+                "features.eyebrow": "Что вы получаете",
+                "features.title": "Чат-бот + Сайт. Одна подписка.",
+                "features.subtitle": "Мы собираем ваши фото и информацию, создаем современный сайт и подключаем ИИ-чат, который отвечает на вопросы и организует заказы.",
+                
+                "features.chatbot.title": "ИИ-чат для заказов и вопросов",
+                "features.chatbot.description": "Автоматизирует бронирование, принимает заказы, отвечает на частые вопросы и собирает лиды 24/7 на вашем сайте и в соцсетях.",
+                "features.chatbot.1": "Вопросы и ответы о меню и продуктах",
+                "features.chatbot.2": "Бронирование и напоминания о встречах",
+                "features.chatbot.3": "Прием заказов и данные клиентов",
+                "features.chatbot.4": "Перевод на человека при необходимости",
+                
+                "features.website.title": "Сайт включен",
+                "features.website.description": "Чистый, быстрый, адаптивный сайт, разработанный для конверсий. Мы создаем его для вас, используя ваши фото и бренд.",
+                "features.website.1": "Главная, Меню/Услуги, О нас, Контакты",
+                "features.website.2": "Галерея фото и спецпредложения",
+                "features.website.3": "Готовность к SEO и аналитика",
+                "features.website.4": "Хостинг и постоянные обновления",
+                
+                "features.connect.title": "Подключитесь везде",
+                "features.connect.description": "Добавьте чат-бот на ваш сайт и опционально в WhatsApp, Facebook или Instagram для бесшовного взаимодействия с клиентами.",
+                "features.connect.1": "Виджет чата на сайте",
+                "features.connect.2": "Личные сообщения Facebook/Instagram",
+                "features.connect.3": "Опциональная интеграция WhatsApp",
+                "features.connect.4": "Уведомления по email и SMS",
+                
+                // How it works section
+                "howitworks.eyebrow": "Простое подключение",
+                "howitworks.title": "Запускаем ваш сайт и чат-бот за 4 шага",
+                
+                "howitworks.step1.number": "1.",
+                "howitworks.step1.title": "Поделитесь фото и деталями",
+                "howitworks.step1.text": "Вы присылаете нам изображения, меню/услуги, часы работы и брендинг.",
+                
+                "howitworks.step2.number": "2.",
+                "howitworks.step2.title": "Мы разрабатываем ваш сайт",
+                "howitworks.step2.text": "Мы создаем современный сайт, оптимизированный для мобильных и конверсий.",
+                
+                "howitworks.step3.number": "3.",
+                "howitworks.step3.title": "Мы обучаем ваш чат-бот",
+                "howitworks.step3.text": "Он изучает ваше меню, услуги и политику для обработки вопросов и заказов.",
+                
+                "howitworks.step4.number": "4.",
+                "howitworks.step4.title": "Запуск и итерации",
+                "howitworks.step4.text": "Запуск за несколько дней. Мы отслеживаем и улучшаем разговоры.",
+                
+                // Pricing section
+                "pricing.eyebrow": "Простое ценообразование",
+                "pricing.title": "Первый месяц бесплатно. Затем 50€/месяц",
+                "pricing.subtitle": "Все включено: сайт, чат-бот, хостинг, обновления и аналитика.",
+                "pricing.interval": "/месяц",
+                "pricing.description": "Первый месяц за наш счет. Без платы за настройку для стандартных пакетов.",
+                
+                "pricing.features.1": "Индивидуальный сайт (до 5 страниц)",
+                "pricing.features.2": "ИИ-чат для заказов и бронирования",
+                "pricing.features.3": "Хостинг, SSL, поддержка домена",
+                "pricing.features.4": "Галерея фото и базовый SEO",
+                "pricing.features.5": "Уведомления по email и SMS",
+                "pricing.features.6": "Ежемесячные улучшения",
+                
+                "pricing.start": "Начать бесплатный месяц",
+                "pricing.questions": "Вопросы? Читайте FAQ",
+                "pricing.note": "Нужно больше страниц или индивидуальные интеграции? Запросите расценки.",
+                
+                "pricing.why_free.title": "Почему первый месяц бесплатный?",
+                "pricing.why_free.text": "Мы хотим, чтобы вы быстро увидели ценность. Попробуйте полный сервис в течение 30 дней. Если не поможет, отмените без оплаты.",
+                
+                "pricing.business.title": "Создано для малого бизнеса",
+                "pricing.business.text": "Рестораны, кафе, салоны, клиники, тренажерные залы и местные магазины — мы адаптируем чат-бот под ваши рабочие процессы.",
+                
+                // FAQ section
+                "faq.eyebrow": "Полезно знать",
+                "faq.title": "Часто задаваемые вопросы",
+                
+                "faq.1.question": "Как чат-бот организует заказы?",
+                "faq.1.answer": "Он собирает выбор клиентов, контактные данные и предпочтительное время, затем отправляет структурированный заказ на вашу электронную почту/SMS или в вашу POS-систему/входящие через интеграции. Мы можем включить подтверждения персонала и автоматические последующие действия.",
+                
+                "faq.2.question": "Что вам нужно от нас для начала?",
+                "faq.2.answer": "Фотографии, логотип, список меню/услуг, часы работы, контактные данные и любые политики (зона доставки, цены и т.д.). Мы позаботимся о тексте и макете.",
+                
+                "faq.3.question": "Какие каналы поддерживаются?",
+                "faq.3.answer": "Виджет сайта по умолчанию. Опционально личные сообщения Facebook/Instagram и WhatsApp в зависимости от вашего плана и политик платформы.",
+                
+                "faq.4.question": "Могу ли я сохранить свой домен?",
+                "faq.4.answer": "Да. Мы подключаем или покупаем/управляем доменом для вас. SSL и хостинг включены.",
+                
+                "faq.5.question": "Есть ли контракт?",
+                "faq.5.answer": "Нет долгосрочного контракта. Помесячно после бесплатного первого месяца. Отмените в любое время.",
+                
+                "faq.6.question": "Могу ли я поговорить с человеком?",
+                "faq.6.answer": "Всегда. Бот может мгновенно передать сотруднику по телефону, электронной почте или в личный inbox.",
+                
+                // Contact section
+                "contact.eyebrow": "Начать",
+                "contact.title": "Расскажите о вашем бизнесе",
+                "contact.subtitle": "Мы ответим с предварительным планом и графиком запуска вашего сайта и чат-бота.",
+                
+                "contact.form.name": "Ваше имя",
+                "contact.form.name_placeholder": "Мария Иванова",
+                "contact.form.email": "Email",
+                "contact.form.email_placeholder": "ваш@бизнес.com",
+                "contact.form.business": "Название бизнеса",
+                "contact.form.business_placeholder": "Кафе Иванова",
+                "contact.form.website": "Сайт (если есть)",
+                "contact.form.website_placeholder": "https://",
+                "contact.form.needs": "Что вам нужно?",
+                "contact.form.needs_placeholder": "Сайт + чат-бот, принимать бронирования и заказы на доставку, подключить WhatsApp…",
+                "contact.form.agreement": "Отправляя, вы соглашаетесь с нашими условиями и конфиденциальностью.",
+                "contact.form.submit": "Начать бесплатный месяц",
+                
+                "contact.talk.title": "Поговорите с нами",
+                "contact.talk.description": "Есть вопросы? Мы рады пообщаться и показать быструю демонстрацию, tailored to your niche.",
+                
+                "contact.privacy.title": "Что насчет конфиденциальности?",
+                "contact.privacy.description": "Мы следуем лучшим практикам обработки данных и храним только то, что необходимо для предоставления услуги. Вы владеете своим контентом и можете экспортировать данные в любое время.",
+                
+                // Footer
+                "footer.privacy": "Конфиденциальность",
+                "footer.terms": "Условия",
+                "footer.status": "Статус"
+            }
+        };
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('[data-scroll]').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-scroll');
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                    }
+                }
+            });
+        });
+        
+        // FAQ toggle
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            answer.classList.toggle('open');
+            
+            const icon = document.querySelectorAll('.faq-question')[index].querySelector('i');
+            if (answer.classList.contains('open')) {
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thanks! We\'ll reach out within 24h.');
+            contactForm.reset();
+        });
+        
+        // Demo chat functionality
+        const demoInput = document.querySelector('.demo-input input');
+        const demoChat = document.querySelector('.demo-chat');
+        
+        demoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        document.querySelector('.demo-input .btn').addEventListener('click', sendMessage);
+        
+        function sendMessage() {
+            const message = demoInput.value.trim();
+            if (message) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message message-user';
+                userMessage.textContent = message;
+                demoChat.appendChild(userMessage);
+                
+                // Clear input
+                demoInput.value = '';
+                
+                // Auto reply after a short delay
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message message-bot';
+                    botMessage.textContent = "Thanks for your message! This is a demo. In a real chatbot, we'd respond based on your query.";
+                    demoChat.appendChild(botMessage);
+                    
+                    // Scroll to bottom
+                    demoChat.scrollTop = demoChat.scrollHeight;
+                }, 1000);
+                
+                // Scroll to bottom
+                demoChat.scrollTop = demoChat.scrollHeight;
+            }
+        }
+
+        // Language switching functionality
+        const languageButton = document.getElementById('languageButton');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const currentLanguageFlag = document.getElementById('currentLanguageFlag');
+        const currentLanguage = document.getElementById('currentLanguage');
+        
+        // Toggle language dropdown
+        languageButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('hidden');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageButton.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.add('hidden');
+            }
+        });
+        
+        // Set language function
+        function setLanguage(lang) {
+            // Update UI elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update language selector
+            const languageMap = {
+                'en': '🇺🇸 EN',
+                'es': '🇪🇸 ES',
+                'fr': '🇫🇷 FR',
+                'pt': '🇵🇹 PT',
+                'ru': '🇷🇺 RU'
+            };
+            
+            if (languageMap[lang]) {
+                const [flag, code] = languageMap[lang].split(' ');
+                currentLanguageFlag.textContent = flag;
+                currentLanguage.textContent = code;
+            }
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Close dropdown
+            languageDropdown.classList.add('hidden');
+        }
+        
+        // Set up language option clicks
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+        
+        // Initialize with saved language or browser preference
+        function initLanguage() {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage && translations[savedLanguage]) {
+                setLanguage(savedLanguage);
+                return;
+            }
+            
+            // Try to detect browser language
+            const browserLang = navigator.language.substring(0, 2);
+            if (translations[browserLang]) {
+                setLanguage(browserLang);
+            } else {
+                // Default to English
+                setLanguage('en');
+            }
+        }
+        
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', initLanguage);
+    </script>
+</body>
+</html>
